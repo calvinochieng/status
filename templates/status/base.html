@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>
+        {% block tittle %}{% endblock tittle %} AwwzApp Status</title>
+        {% load humanize %} 
+        <link rel="shortcut icon" href="/static/app/images/favicon.ico" type="image/x-icon">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="/static/app/bulma/css/bulma.min.css">
+        <link rel="stylesheet" href="/static/app/style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-1/css/all.min.css" integrity="sha512-ZYg+hQvLlM0W9C3P6vTpes5LmJ66G2EsroxDNzwD6qiulckldb29eD9I672HL2X+LH5nRhY1sQqZLJGB+aUUPg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        
+        {% block style %}            
+            <style>
+                .content{
+                    color: #4a4a4a;
+                    font-size: 1.25rem;
+                    font-weight: 400;
+                    line-height: 1.25;
+                }
+            </style>
+        {% endblock style %}
+            <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-9Q4TESDCD5"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-9Q4TESDCD5');
+        </script>    
+    </head>
+    <body >
+        <nav class="navbar has-background-primary" role="navigation" aria-label="main navigation">          
+            <div class="container">
+                <div class="navbar-brand">
+                    <a class="navbar-item has-text-weight-bold	" href=".">
+                        {% block page_name %}{% endblock page_name %}
+                    </a> 
+                    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                        <span aria-hidden="true" ></span>
+                        <span aria-hidden="true" ></span>
+                        <span aria-hidden="true" ></span>
+                    </a>
+                </div>
+                <div class="navbar-menu" id="navMenu">
+                    <div class="navbar-end">      
+                        <a class="navbar-item" href="/status/">
+                            Home
+                        </a>     
+                        <a class="navbar-item" href="/status/about/">
+                            About
+                        </a>     
+                        <a class="navbar-item" href="/status/howto/">
+                            Howto
+                        </a> 
+                        <hr class="hr m-0">
+                        <a class="navbar-item" href="/status/">
+                            Home
+                        </a> 
+                        <div class="navbar-item is-hidden-tablet	">  
+                            Contact Us: 
+                            <a href="https://www.instagram.com/awwzstatus/" class="has-text-danger	">
+                                <span class="icon is-medium	 ">
+                                    <i class="fab fa-instagram"></i>
+                                </span>                    
+                            </a>
+                        </div>
+                        <div class="navbar-item has-text-grey is-hidden-tablet	">
+                            <p>
+                            &copy; AwwzApp 2021
+                            </p>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </nav>
+        {% if messages %}
+            {% for message in messages %}
+            <div {% if message.tags %} class="message is-{{message.tags}} " {% endif %} onclick="document.querySelector('.message').style.display = 'none';">
+                <div class="message-body">
+                    <p>{{ message }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        {% endif %}
+        
+        {% block section %}           
+        {% endblock section %}
+            
+        
+    </body>
+    <script src="/static/app/js/control.js"></script>
+</html>

@@ -1,0 +1,39 @@
+{% extends 'status/base.html' %}
+{% block tittle %}Help{% endblock tittle %}
+{% block style %}           
+    <style>
+        .content{
+            color: #4a4a4a;
+            font-size: 1.5rem !important;
+            font-weight: 400;
+            line-height: 1.25;
+        }
+        .subtitle strong{
+            font-weight: 600 !important;
+        }
+        .screenshot_image{
+            max-width:100px;
+            border: 1px solid cyan;
+        }
+    </style>
+{% endblock style %}
+
+{% block page_name %}Help{% endblock page_name %}
+
+{% block section %}
+    <section class="section">
+        <h1 class="title is-size-3">Help</h1>
+        <p class="subtitle mt-0 is-size-4">
+            Please describe how you want us to help you in details below .
+        </p>
+        <form action="/status/help/" class="form"  method="post"  enctype="multipart/form-data" >{%csrf_token%}
+            <div class="field">
+                <textarea name="description" cols="40" rows="5" maxlength="500" required id="id_description" spellcheck="true" class="textarea input"></textarea>
+            </div>
+            <button class="button is-primary" type="submit">Submit</button>
+        </form>
+    </section>    
+{% endblock section %}
+    
+
+    

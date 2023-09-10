@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Withdraw - AwwzApp Status</title>
+        <link rel="stylesheet" href="/static/app/style.css">
+        <link rel="shortcut icon" href="/static/app/images/favicon.ico" type="image/x-icon">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-1/css/all.min.css" integrity="sha512-ZYg+hQvLlM0W9C3P6vTpes5LmJ66G2EsroxDNzwD6qiulckldb29eD9I672HL2X+LH5nRhY1sQqZLJGB+aUUPg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="/static/app/bulma/css/bulma.min.css">
+        <style>
+          .wallet-card{
+            width: 100%;
+            border-bottom: 30px solid #1f1e1e;
+            border-radius: 10px;
+            height: 200px;
+            background: url(/static/app/images/status.png), linear-gradient(45deg, #00bcd4, #22d1b2);
+            background-position: 14% 4%;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-blend-mode: overlay;}
+            .is-60x60{
+            height: 60px;
+            width: 60px;
+            overflow: hidden;
+            border-radius: 50%;}
+            .is-is-size-3_5{
+            font-size: 1.75rem !important;
+            }
+            .card{
+                position: relative;
+            }
+            .submit-container{
+                position: absolute;
+                height: 100%;
+                width: 100%;
+                max-width: 100%;
+                top: 0;
+                bottom: 0;
+                background-color: transparent;
+                z-index: 101;
+            }
+            .remove-form{
+                position: absolute;
+                height: 100%;
+                width: 100%;
+                max-width: 100%;
+                top: 0;
+                bottom: 0;
+                background-color: rgb(21 21 21 / 95%);
+                z-index: 0;
+            }
+            .submit-form{
+                height: auto !important;
+            }
+            .this-message{z-index:3}
+
+            .label {
+                color: #363636;
+                display: block;
+                font-size: 1.23rem !important;
+                font-weight: normal !important;
+            }
+        </style>
+    </head>
+    <body > 
+        <nav class="navbar is-flex is-align-items-center">
+            <div class="navbar-brand">
+                <a href="/status/home/" class="navbar-item has-text-grey-dark">
+                    <span class="icon ">
+                        <i class="fas fa-arrow-left"></i>
+                    </span>
+                </a> 
+            </div>
+            <div class="container is-flex is-align-items-center is-justify-content-space-between">
+                <div class="is-flex has-text-grey-dark is-justify-content-space-evenly has-text-weight-bold" style="flex: 1;">
+                    <span>Withdraw</span>
+                </div> 
+                <a href="/status/home/" class="nabar-item has-text-grey-dark pr-3 has-text-weight-medium">{{request.user.username}}</a> 
+            </div>
+        </nav>
+    {% if  user.profile.full_name and user.profile.whatsapp%}
+        {% if messages %}
+            {% for message in messages %}
+            <div {% if message.tags %} class="message is-{{message.tags}} " {% endif %} onclick="document.querySelector('.message').style.display = 'none';">
+                <div class="message-body">
+                    <p>{{ message }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        {% endif %}
+        {% if income < 101 %}
+            <div  class="message this-message is-warning" onclick="document.querySelector('.this-message').style.display = 'none';">
+                <div class="message-body">
+                    <p>This account hasn't reached threshold limit of KESH 101.00 , keep going you will get there</p>
+                </div>
+            </div>
+        {% endif %}
+        <div class="submit-container is-justify-content-center is-align-items-center" style="display: none;">
+             <div class="remove-form"  onclick="hideShow()"></div>
+            {% if income > 100%}
+                <form action="" method="post" class="card submit-form section m-4">{%csrf_token%}
+                    <h1 class="padded title  has-text-weight-normal	is-is-size-3_5">
+                        Confirm to Withdraw
+                    </h1>
+                    <div class="field">
+                        <label class="label"  for="amount">Amount <span class=" has-text-danger">*</span> </label>
+                        <input required type="checkbox" class="checkbox" name="chashout" id="id_amount"> <span class="pl-3"> KSH {{income|floatformat:2}} </span>
+                    </div> 
+                    <button type="submit" class="button is-primary" style="width: 100%;">Confirm Okay</button>
+                </form>
+            {% else %}
+                <div  class="message this-message is-danger m-4">
+                    <div class="message-body">
+                        <p>This account hasn't reached threshold of KSH 101.00 , keep going you will get there</p>
+                    </div>
+                </div>
+            {%endif%}
+        </div>
+        <section class="section">
+            <div class="">
+              <div class="card p-4 pt-5 has-background-primary wallet-card">
+                <div class="is-flex is-justify-content-space-between">
+                    <div class="subtitle has-text-black pl-0">
+                        {{request.user.profile.full_name}}
+                        <br>
+                        <span>{{request.user.profile.whatsapp}}</span>
+                    </div>                     
+                    <div class="media-center">
+                        {% if user.profile.dp %}                        
+                            <figure class="image is-60x60">
+                                <img class="is-rounded" src="https://res.cloudinary.com/awwzcdn/image/upload/v1617538750/{{user.profile.dp}}">
+                            </figure>
+                            {% else %} 
+                        {% endif %}
+                    </div>                   
+                </div>
+                <div class="is-flex is-justify-content-space-between">
+                    <div class="card-content pl-0 has-text-weight-bold has-text-black">
+                        {% if income is not None %}
+                            KSH {{income|floatformat:2}}
+                        {% else %} 
+                            KESH 0.00
+                        {% endif%}
+                    </div>
+                    <div class="card-content pr-0 has-text-weight-bold">
+                        {{today}}
+                    </div>
+                </div>
+              </div>
+              <button class="button is-primary is-medium mt-5" style="width: 100%;" onclick="hideShow()">Withdraw</button>
+            </div>
+            <div class="table-container pt-5">
+                <p class="subtitle has-text-weight-medium is-size-4">Withdrawal History</p>                  
+                {% if  withdrawals %}
+                  <table class="table is-fullwidth is-stripped is-hoverable">
+                      <thead>
+                          <tr>
+                              <th>Date</th>
+                              <th>Amount</th>
+                              <th>Status</th>
+                          </tr>
+                      </thead>
+                      <tbody>                          
+                        {% for item in withdrawals %}                              
+                            <tr>
+                                <td>{{item.date}}</td>
+                                <td>{{item.amount}}</td>
+                                <td>
+                                {%if item.cashedout%}
+                                <button class="button is-success">Approved</button>
+                                {%else%}
+                                <button class="button is-info">Pending</button>
+                                {%endif%}
+                                </td>
+                            </tr>                              
+                        {% endfor %}
+                      </tbody>
+                  </table>
+                {% else %}
+                  <p class="subtitle">Your complete withdrawal and pending withdrawal history will appear here</p>            
+                {% endif %}
+            </div>
+
+            {% else %}
+            <a href="/status/edit/" class="message is-warning has-text-grey-dark">
+                <div class="message-header">
+                    <p>Warning: Complete Your Profile</p>
+                </div>
+                <div class="message-body">
+                    <p>You won't be able to see your earnings before <a class="is-link" href="/status/edit/">completting your profile</a></p>
+                </div>
+            </a>
+        </section> 
+    {% endif %}
+    </body>
+    <script src="/static/app/js/control.js"></script>
+    <script>
+    function hideShow() {
+        var x = document.querySelector(".submit-container");
+        if (x.style.display === "none") {
+          x.style.display = "flex";
+        } else {
+          x.style.display = "none";
+        }
+      }
+    </script> 
+</html>

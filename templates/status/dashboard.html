@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - AwwzApp Status</title>
+    <link rel="shortcut icon" href="/static/app/images/favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-1/css/all.min.css" integrity="sha512-ZYg+hQvLlM0W9C3P6vTpes5LmJ66G2EsroxDNzwD6qiulckldb29eD9I672HL2X+LH5nRhY1sQqZLJGB+aUUPg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/static/app/bulma/css/bulma.min.css">
+    <link rel="stylesheet" href="/static/app/style.css">
+    <style>
+        .dashboard_cards{            
+            height: 120px;
+            width: 120px;
+            margin: 4px;
+            display: flex;
+            border: 1px solid;
+            justify-content: center;
+            align-items: center;
+        }
+        .notifications{position: absolute;
+            right: -13px;
+            width: auto;
+            height: 36px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            top: -12px;
+            border: 1px solid;
+            min-width: 36px;
+            border-radius: 50%;
+            background: #f391d9;}
+    </style>
+    
+</head>
+<body>
+    <nav class="navbar is-primary is-flex is-align-items-center">
+        <div class="container">
+            <div class="navbar-brand">
+                <a href="/status/home/" class="navbar-item has-text-grey-dark">
+                    {{request.user.username}}
+                </a>
+                
+
+                <div class="container is-flex is-align-items-center is-justify-content-space-between">
+                    <div class="is-flex has-text-grey-dark is-justify-content-space-evenly has-text-weight-bold" style="flex: 1;">
+                        <span>Dashboard</span>
+                    </div> 
+                </div>
+                
+                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                    <span aria-hidden="true" ></span>
+                    <span aria-hidden="true" ></span>
+                    <span aria-hidden="true" ></span>
+                </a>
+            </div>
+
+
+            <div class="navbar-menu" id="navMenu">
+                <div class="navbar-end">      
+                    <a class="navbar-item" href="/status/">
+                        Home
+                    </a> 
+                </div>
+            </div>
+
+
+        </div>
+    </nav>
+    <section class="section">
+        <div class="is-flex is-flex-wrap-wrap is-justify-content-space-evenly is-align-items-center">
+            <div class="card dashboard_cards">
+                Job
+                <span class="notifications has-text-danger">34</span>
+            </div>
+            <div class="card dashboard_cards has-text-danger">
+                Client
+                <span class="notifications">9</span>                
+            </div>
+            <div class="card dashboard_cards has-text-danger">
+                Adverts
+                <span class="notifications">56x</span>
+            </div>
+            <div class="card dashboard_cards has-text-danger">
+                Aprovals
+                <span class="notifications">3</span>
+            </div>
+        </div>
+    </section>
+    
+</body>
+<script src="/static/app/js/control.js"></script>
+</html>

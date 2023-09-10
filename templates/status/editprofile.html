@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Edit Profile - AwwzApp Status</title>
+        <link rel="shortcut icon" href="/static/app/images/favicon.ico" type="image/x-icon">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="/static/app/bulma/css/bulma.min.css">
+        <link rel="stylesheet" href="/static/app/style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-1/css/all.min.css" integrity="sha512-ZYg+hQvLlM0W9C3P6vTpes5LmJ66G2EsroxDNzwD6qiulckldb29eD9I672HL2X+LH5nRhY1sQqZLJGB+aUUPg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <style>
+            footer{
+                background-color: #efefef !important;
+            }
+            .label {
+                color: #363636;
+                display: block;
+                font-size: 1.23rem !important;
+                font-weight: normal !important;
+            }
+            footer{
+                background-color: transparent !important;
+            }
+            .image{
+                border-radius: 50% !important;
+                border:2px solid cyan;
+                overflow: hidden;
+            }
+        </style>   
+    </head>
+    <body >                 
+        <form enctype="multipart/form-data" method="POST" style="margin-top: 0px !important;" action="." class="container ">{% csrf_token %}    
+            <nav class="navbar">
+                <div class="navbar-brand is-flex is-justify-content-space-between is-align-items-center	mr-4 ml-4">
+                    <a href="/status/home/" class="has-text-grey-dark">
+                        <span class="icon ">
+                            <i class="fas fa-arrow-left"></i>
+                        </span></a>
+                    <span class="has-text-weight-normal	mb-0 is-size-4">
+                        Update profile
+                    </span>
+                    <button type="submit" class="button has-text-primary">Save</button>
+                </div>
+            </nav>
+            {% if messages %}
+                {% for message in messages %}
+                <div {% if message.tags %} class="message is-{{message.tags}} " {% endif %} onclick="document.querySelector('.message').style.display = 'none';">
+                    <div class="message-body">
+                        <p>{{ message }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            {% endif %}
+            <section class="section pt-4">
+                <div class="field">
+                    <label for="" class="label">Profile Picture</label>
+                    <div class="file is-boxed">
+                        <label class="file-label">
+                        <input class="file-input" type="file" accept="image/*" name="dp" required id="id_dp"  onchange="document.getElementById('dp_prev').src = window.URL.createObjectURL(this.files[0]);document.getElementById('show_image').style.display='flex'; document.getElementById('remove_icon').style.display='none'">
+                        <span class="file-cta">
+                            {% if user.profile.dp %}                        
+                                <figure class="image is-flex is-justify-content-center is-align-items-center is-128x128 mb-3">
+                                    <img id="dp_prev" class="" src="https://res.cloudinary.com/awwzcdn/image/upload/v1617538750/{{user.profile.dp}}">
+                                </figure>
+                                {% else %} 
+                                    <span id="remove_icon" class="icon is-large	 has-text-grey 	">
+                                        <i class="fas fa-user fa-3x" ></i>
+                                    </span>                                                          
+                                    <figure id="show_image" class="image is-flex is-justify-content-center is-align-items-center is-128x128 mb-3" style="display: none !important;">
+                                        <img id="dp_prev" src="">
+                                    </figure>
+                            {% endif %}
+                            <span class="file-label">
+                            Choose Square Image...
+                            </span>
+                        </span>
+                        </label>
+                    </div>
+                </div>
+    
+                <div class="field">
+                    <label class="label  "  for="id_full_name"> {{form.full_name.label}}</label>
+                    <div class="control">
+                        {{form.full_name}}
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label  "  for="id_whatsapp">WhatsApp Number</label>
+                    <div class="control">
+                        {{form.whatsapp}}
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label  "  for="id_email">Email</label>
+                    <div class="control">
+                        {{form.email}}
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label  "  for="id_birth_date">Birth Date</label>
+                    <div class="control">
+                        {{form.birth_date}}
+                    </div>
+                </div>                
+                <button type="submit" class="button has-text-white is-primary mt-4" style="width:100%;">Save</button>
+            </section>
+        </form>
+    </body>
+    <script src="/static/app/js/control.js"></script>
+</html>

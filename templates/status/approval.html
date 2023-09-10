@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Account Verification Status - AwwzApp Status</title>
+        <link rel="shortcut icon" href="/static/app/images/favicon.ico" type="image/x-icon">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="/static/app/bulma/css/bulma.min.css">
+        <link rel="stylesheet" href="/static/app/style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-1/css/all.min.css" integrity="sha512-ZYg+hQvLlM0W9C3P6vTpes5LmJ66G2EsroxDNzwD6qiulckldb29eD9I672HL2X+LH5nRhY1sQqZLJGB+aUUPg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <style>
+            .label {
+                color: #363636;
+                display: block;
+                font-size: 1.23rem !important;
+                font-weight: normal !important;
+            }
+            footer{
+                background-color: transparent !important;
+            }
+            .image{
+                max-width: 100px;
+                border:1px solid cyan;
+                overflow: hidden;
+            }
+        </style>    
+    </head>
+    <body >  
+
+        <section class="hero is-primary is-fullheight">
+            <div class="hero-body">
+            <div>
+                <p class="title">
+                    Verification Status
+                </p>
+                <p class="subtitle">
+                    
+                    {% if verified and approved%}
+                        Verified
+                    {% elif verified and not approved %}
+                        Pending Verification
+                    {% else%}
+                        Unverified                     
+                    {% endif %}
+                    
+                </p>
+            </div>
+            </div>
+          </section>
+        {% comment %} <form enctype="multipart/form-data" method="POST" action="/status/verify-account/" class="container mt-0">{% csrf_token %}    
+            <nav class="navbar">
+                <div class="navbar-brand is-flex is-justify-content-space-between is-align-items-center	mr-4 ml-4">
+                    <a href="/status/home/" class="has-text-grey-dark">
+                        <span class="icon ">
+                            <i class="fas fa-arrow-left"></i>
+                        </span></a>
+                    <span class="has-text-weight-normal	mb-0 is-size-4">
+                        Account Approval
+                    </span>
+                    <button type="submit" class="button has-text-primary">Save</button>
+                </div>
+            </nav>
+            {% if messages %}
+                {% for message in messages %}
+                <div {% if message.tags %} class="message is-{{message.tags}} " {% endif %} onclick="document.querySelector('.message').style.display = 'none';">
+                    <div class="message-body">
+                        <p>{{ message }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            {% endif %}
+            <section class="section pt-4">
+                    <h1 class="padded title  has-text-weight-normal	mb-0">
+                        Verify your account
+                    </h1>  
+                    <div class="field">
+                        <label class="label ">Your Instagram Username</label>
+                        <div class="control">
+                            <input type="text" name="ig_username" class="input" maxlength="100" required="" id="id_ig_username">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label ">Average Daily Instagram Status Views</label>
+                        <div class="control">
+                            <input type="number" name="views" max="10000" required="" id="id_views" class="input">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="id_screenshot" class="label">Screenshot Confirmation</label>
+                        <figure class="image is-9by6 screenshot_image">
+                            <img  id="show_image" src="https://bulma.io/images/placeholders/360x640.png" style="display: none;">
+                        </figure>
+                        <div class="file">
+                            <label class="file-label">
+                                <input class="file-input" type="file" name="screenshot" accept="image/*" required id="id_screenshot"  onchange="document.getElementById('show_image').src = window.URL.createObjectURL(this.files[0]);document.getElementById('show_image').style.display='flex';">
+                            <span class="file-cta">
+                                <span class="file-icon">
+                                    <i class="fas fa-upload"></i>
+                                </span>
+                                <span class="file-label">
+                                Choose Screenshot
+                                </span>
+                            </span>
+                            </label>
+                        </div> 
+                    </div>                
+                    <button type="submit" class="button is-primary" style="width: 100%;">Verify</button>
+            </section>
+        </form> {% endcomment %}
+    </body>
+    <script src="/static/app/js/control.js"></script>
+</html>

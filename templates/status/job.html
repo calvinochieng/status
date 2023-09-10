@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Job</title>
+        <link rel="shortcut icon" href="/static/app/images/favicon.ico" type="image/x-icon">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="/static/app/bulma/css/bulma.min.css">
+        <link rel="stylesheet" href="/static/app/style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-1/css/all.min.css" integrity="sha512-ZYg+hQvLlM0W9C3P6vTpes5LmJ66G2EsroxDNzwD6qiulckldb29eD9I672HL2X+LH5nRhY1sQqZLJGB+aUUPg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <style>
+            .card{
+                position: relative;
+            }
+            .desktop-card{
+                height: 100vh;
+                border-radius: unset !important;
+                box-shadow: none !important;}
+            nav{
+                position: absolute !important;
+                width: 100%;
+                top: 0;
+                background-color: rgb(0 0 0 / 61%) !important;
+            }
+            .card-content{
+                position: absolute;
+                z-index: 100;
+                background: rgba(0, 0, 0,  0.61);
+                border: unset;
+                border-top: 1px solid rgba(0, 0, 0, 0.603);
+                border-radius: unset !important;
+                bottom: 0;
+                width: 100%;
+
+            }
+            .download-button{
+                /* background: white; */
+                        border-radius: 50%;
+                        height: 32px;   
+                        width: 32px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;}
+            .content{
+                color: rgb(247, 247, 247);
+            }
+            .submit-container{
+                position: absolute;
+                height: 100%;
+                width: 100%;
+                max-width: 100%;
+                top: 0;
+                bottom: 0;
+                background-color: transparent;
+                z-index: 101;
+            }
+            .remove-form{
+                position: absolute;
+                height: 100%;
+                width: 100%;
+                max-width: 100%;
+                top: 0;
+                bottom: 0;
+                background-color: rgb(21 21 21 / 95%);
+                z-index: 0;
+            }
+            .submit-form{
+                height: auto !important;
+            }
+
+            .label {
+                color: #363636;
+                display: block;
+                font-size: 1.23rem !important;
+                font-weight: normal !important;
+            }
+            input[name="screenshot"]{
+                position:absolute;
+                top: 2px;
+                opacity: 0 !important;
+            }
+            .screenshot_image{
+                max-width:100px;
+                border: 1px solid cyan;
+            }
+            .delete{    position: absolute;
+                top: 1rem;
+                right: 1rem;
+            }
+            @media screen and (min-width: 1024px) {
+                body{
+                    display: flex;
+                    justify-content: center;
+                }
+                .desktop-card{
+                    width: 360px !important;
+                }
+                nav{display: block !important;}
+            }
+        </style>
+            <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-9Q4TESDCD5"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-9Q4TESDCD5');
+        </script>    
+    </head>
+    <body >               
+        <div class="card desktop-card has-background-black is-flex is-justify-content-center is-flex-direction-column is-align-items-center">
+            <div class="submit-container is-justify-content-center is-align-items-center" style="display: none;">
+                <div class="remove-form"  onclick="hideShow()"></div>
+                <form action="." method="post" enctype="multipart/form-data"  class="card submit-form section m-4">{%csrf_token%}
+                    <h1 class="padded title  has-text-weight-normal	mb-0">
+                        Submit Views
+                    </h1>
+                    
+                    <div  class="message is-warning">
+                        <div class="message-header">
+                            <p>Add only genuine Views</p>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label"  for="">Social Platform: Instagram</label>
+                    </div>  
+                    <div class="field">
+                        <label class="label ">Views</label>
+                        <div class="control">
+                            {{form.views}}
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="id_screenshot" class="label">Screenshot Confirmation</label>
+                        <figure class="image is-9by6 screenshot_image">
+                            <img  id="show_image" src="https://bulma.io/images/placeholders/360x640.png" style="display: none;">
+                        </figure>
+                        <div class="file">
+                            <label class="file-label">
+                                <input class="file-input" type="file" name="screenshot" accept="image/*" required id="id_screenshot"  onchange="document.getElementById('show_image').src = window.URL.createObjectURL(this.files[0]);document.getElementById('show_image').style.display='flex';">
+                            <span class="file-cta">
+                                <span class="file-icon">
+                                    <i class="fas fa-upload"></i>
+                                </span>
+                                <span class="file-label">
+                                Choose Screenshot
+                                </span>
+                            </span>
+                            </label>
+                        </div> 
+                    </div>
+                    
+                    <button type="submit" class="button is-primary" style="width: 100%;">Submit</button>
+                </form>
+            </div>
+            <nav class="navbar">
+                <div class="navbar-brand is-flex is-justify-content-space-between is-align-items-center	mr-4 ml-4">
+                    <a href="/status/home/" class="has-text-grey-dark">
+                        <span class="icon ">
+                            <i class="fas fa-arrow-left"></i>
+                        </span>
+                    </a>
+                    <div>
+                        <a class="download-button" href="{{job.file.url}}" download="">
+                            <span class="icon ">
+                                <i class="fas fa-download"></i>
+                            </span>
+                            <span></span>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+                <figure class="image">
+                    <img src="{{job.file.url}}" alt="">
+                </figure>
+                <div class="card-content is-flex is-flex-direction-column is-justify-content-center">
+                    <div class="content has-text-weight-medium">
+                        {{job.remarks}}
+                    </div>
+                    <button class="button is-primary" onclick="hideShow()">Submit Views</button>
+                </div>
+            </div>  
+    </body>
+    <script>
+    function hideShow() {
+        var x = document.querySelector(".submit-container");
+        if (x.style.display === "none") {
+          x.style.display = "flex";
+        } else {
+          x.style.display = "none";
+        }
+      }
+    </script>     
+</html>

@@ -1,0 +1,46 @@
+{% extends 'status/status_base.html' %}
+
+{% block tittle %}Login{% endblock tittle %}
+
+{% block style%}        
+    <style>
+        .label {
+            color: #363636;
+            display: block;
+            font-size: 1.23rem !important;
+            font-weight: normal !important;
+        }
+    </style>
+{% endblock style%}
+    
+{% block cta_buttons %}
+    <div class="buttons">
+        <a href="/status/register/" class="button is-black has-text-white">
+            Register
+        </a>
+    </div>
+{%endblock cta_buttons%}
+
+{%block content%}
+    <div class="">        
+        <h1 class="padded title  has-text-weight-normal	">
+            Welcome back please Login
+        </h1>         
+        <form method="POST" style="margin-top: 0px !important;" action="/status/login/" class="container ">{% csrf_token %}
+            <div class="field">
+                <label class="label  "  for="id_username">Username</label>
+                <div class="control">
+                    <input  class="input" type="text" name="username" autofocus autocapitalize="none" autocomplete="username" maxlength="150" required id="id_username">
+                </div>
+            </div>
+            
+            <div class="field">
+                <label class="label   " for="id_password">Password</label>
+                <div class="control">
+                    <input  class="input" type="password" name="password" autocomplete="current-password" required id="id_password">
+                </div>
+            </div> 
+            <button type="submit" class="button is-primary" style="width:100%;"> Login</button>
+        </form>
+    </div>
+{%endblock content%}

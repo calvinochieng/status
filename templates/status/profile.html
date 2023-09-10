@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{{ user.username }}- AwwzApp Status</title>
+        {% load humanize %} 
+        <link rel="shortcut icon" href="/static/app/images/favicon.ico" type="image/x-icon">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="/static/app/bulma/css/bulma.min.css">
+        <link rel="stylesheet" href="/static/app/style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-1/css/all.min.css" integrity="sha512-ZYg+hQvLlM0W9C3P6vTpes5LmJ66G2EsroxDNzwD6qiulckldb29eD9I672HL2X+LH5nRhY1sQqZLJGB+aUUPg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <style>
+            .avator{
+                overflow:hidden; border-radius: 50%;
+                background: #d0d0d0;
+                overflow: hidden;
+                border: 5px solid #00d1b2;
+                border-radius: 50%;}
+            .label {
+                color: #363636;
+                display: block;
+                font-size: 1.23rem !important;
+                font-weight: normal !important;
+            }
+            .profile-container{ display: flex;
+                text-align: inherit;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                padding: 1.5em;}
+            .add-dp{height: 128px;
+                width: 128px;
+                background: #cccccc;
+                border-radius: 50%;
+                text-align: center;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                position:relative;}
+                .edit-dp{
+                    position:absolute;
+                    top:20px;
+                    right:20px;
+                }
+                .job{width:50%;
+                border:unset;
+                padding:2px;
+                position: relative;}
+/* ---------------------verification container style here */
+
+                .submit-container{
+                position: absolute;
+                height: 100%;
+                width: 100%;
+                max-width: 100%;
+                top: 0;
+                bottom: 0;
+                background-color: transparent;
+                z-index: 101;
+            }
+            .remove-form{
+                position: fixed;
+                height: 100%;
+                width: 100%;
+                max-width: 100%;
+                top: 0;
+                bottom: 0;
+                background-color: rgb(21 21 21 / 95%);
+                z-index: 0;
+            }
+            .submit-form{
+                height: auto !important;
+            }
+
+            .label {
+                color: #363636;
+                display: block;
+                font-size: 1.23rem !important;
+                font-weight: normal !important;
+            }
+            input[name="screenshot"]{
+                position:absolute;
+                top: 2px;
+                opacity: 0 !important;
+            }
+            .screenshot_image{
+                max-width:100px;
+                border: 1px solid cyan;
+            }
+            .delete{    position: absolute;
+                top: 1rem;
+                right: 1rem;
+            }
+
+
+        </style>
+            <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-9Q4TESDCD5"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-9Q4TESDCD5');
+        </script>    
+    </head>
+    <body >
+        <nav class="navbar" role="navigation" aria-label="main navigation">          
+            <div class="container">
+                <div class="navbar-brand">
+                    <a class="navbar-item has-text-weight-bold	" href=".">
+                        {{ user.username }} 
+                        {% if verified and approved%}
+                                <span class="ml-1  has-text-success icon is-small">
+                                        <i class="fa fa-check-circle"></i>
+                                </span>
+                            {% elif verified and not approved %}
+                                <span class="ml-1 has-text-grey	 icon is-small">
+                                        <i class="fa fa-clock"></i>
+                                </span>
+                        {% endif %}
+                            
+
+                    </a> 
+                    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                        <span aria-hidden="true" ></span>
+                        <span aria-hidden="true" ></span>
+                        <span aria-hidden="true" ></span>
+                    </a>
+                </div>
+                <div class="navbar-menu" id="navMenu">
+                    <div class="navbar-end">      
+                        <a class="navbar-item" href="/status/">
+                            Home
+                        </a>                  
+                        {% if has_profile%}
+                            <a class="navbar-item" href="/status/update/">
+                                Update Profile
+                            </a>
+                        {%else%}
+                            <a class="navbar-item" href="/status/edit/">
+                                Create Profile
+                            </a>
+                        {%endif%}  
+                        <a class="navbar-item" href="/status/about/">
+                            About
+                        </a>     
+                        <a class="navbar-item" href="/status/howto/">
+                            Howto
+                        </a>
+                        <a href="/status/logout/" class="navbar-item">
+                            Logout
+                        </a> 
+                        <a href="/status/help/" class="navbar-item">
+                            Help
+                        </a>  
+                        <hr class="hr m-0">
+                        <a class="navbar-item" href="/status/">
+                            Home
+                        </a> 
+                        <div class="navbar-item is-hidden-tablet	">  
+                            Contact Us: 
+                            <a href="https://chat.whatsapp.com/CdFwsNcQOk0BAV2BD69rW4" class="has-text-success	">
+                                <span class="icon is-medium	 ">
+                                    <i class="fab fa-whatsapp"></i>
+                                </span>                    
+                            </a>
+                            <a href="https://www.instagram.com/awwzstatus/" class="has-text-danger	">
+                                <span class="icon is-medium	 ">
+                                    <i class="fab fa-instagram"></i>
+                                </span>                    
+                            </a>
+                            <a href="https://www.youtube.com/channel/UCsfvja_FNoQ1AARfE3MynKg" class="has-text-danger-dark	">
+                                <span class="icon is-medium">
+                                    <i class="fab fa-youtube"></i>
+                                </span>
+                            </a>
+                        </div>
+                        <div class="navbar-item">
+                            WhatsApp Group <a href="https://chat.whatsapp.com/CdFwsNcQOk0BAV2BD69rW4" class="has-text-success	">
+                                <span class="ml-3 icon is-medium	 ">
+                                    <i class="fab fa-whatsapp"></i>
+                                </span>                    
+                            </a>
+                        </div>
+                        <div class="navbar-item has-text-grey is-hidden-tablet	">
+                            <p>
+                            &copy; AwwzApp 2021
+                            </p>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </nav>
+        {% if not verified%}            
+            <div>
+                <div class="submit-container is-justify-content-center is-align-items-center" style="display: none;">
+                    <div class="remove-form"  onclick="hideShow()"></div>
+                    <form action="/status/verify-account/" method="post" enctype="multipart/form-data"  class="card submit-form section m-4">{%csrf_token%}
+                        <h1 class="padded title  has-text-weight-normal	mb-0">
+                            Account Verification
+                        </h1>  
+                        <div class="field">
+                            <label class="label ">Instagram Username</label>
+                            <div class="control">
+                                <input type="text" name="ig_username" class="input" maxlength="100" required="" id="id_ig_username">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label ">Status Views</label>
+                            <div class="control">
+                                <input type="number" name="views" max="10000" required="" id="id_views" class="input">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="id_screenshot" class="label">Confirm</label>
+                            <figure class="image is-9by6 screenshot_image">
+                                <img  id="show_image" src="https://bulma.io/images/placeholders/360x640.png" style="display: none;">
+                            </figure>
+                            <div class="file">
+                                <label class="file-label">
+                                    <input class="file-input" type="file" name="screenshot" accept="image/*" required id="id_screenshot"  onchange="document.getElementById('show_image').src = window.URL.createObjectURL(this.files[0]);document.getElementById('show_image').style.display='flex';">
+                                <span class="file-cta">
+                                    <span class="file-icon">
+                                        <i class="fas fa-upload"></i>
+                                    </span>
+                                    <span class="file-label">
+                                    Choose Screenshot
+                                    </span>
+                                </span>
+                                </label>
+                            </div> 
+                        </div>                
+                        <button type="submit" class="button is-primary" style="width: 100%;">Verify</button>
+                    </form>
+                </div>
+                <div class="has-background-danger-light is-flex is-align-items-center is-size-5 p-2 content mb-0">
+                    Unverified account <button class="button is-primary ml-2" onclick="hideShow()">Verify</button>
+                </div>
+            </div>            
+        {% endif %}       
+        
+        {% if messages %}
+            {% for message in messages %}
+            <div {% if message.tags %} class="message is-{{message.tags}} " {% endif %} onclick="document.querySelector('.message').style.display = 'none';">
+                <div class="message-body">
+                    <p>{{ message }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        {% endif %}
+
+        <section class="">
+            <div class="is-flex is-justify-content-center">
+                <div class="media profile-container">
+                    <div class="media-center">
+                        {% if user.profile.dp %}                        
+                            <figure class="image is-128x128 mb-3 avator is-flex is-justify-content-center is-align-items-center">
+                                <img src="https://res.cloudinary.com/awwzcdn/image/upload/v1617538750/{{user.profile.dp}}">
+                            </figure>
+                            {% else %} 
+                            <a class="add-dp mb-3" href="/status/edit/">
+                                <span class="icon is-large	 has-text-grey	">
+                                    <i class="fas fa-user fa-3x" ></i>
+                                </span>
+                                <span class="icon edit-dp has-text-grey	">
+                                    <i class="fas fa-edit has-text-link"></i>
+                                </span>
+                            </a>
+                        {% endif %}
+                    </div>
+                    <div class="media-content">                        
+                        {% if  user.profile.full_name%}
+                            <p class="title is-4 has-text-weight-medium	">{{user.profile.full_name}}</p>
+                            {% else %} 
+                            <p>
+                                <a class="has-text-grey-dark" href="/status/edit/">
+                                    Add Name  <i class="fas fa-edit has-text-link"></i>
+                                </a>
+                            </p>
+                        {% endif %}
+                                                   
+                        {% if user.profile.whatsapp %}
+                            <p class="subtitle is-6 mb-2">{{user.profile.whatsapp}}</p>
+                            {% else %}
+                            <p  class="subtitle is-6 mb-2">
+                                <a class="has-text-grey-dark" href="/status/edit/">
+                                    WhatsApp Number <i class="fas fa-edit has-text-link"></i>
+                                </a>
+                            </p>
+                        {% endif %}  
+                        <p>
+                            <span class="mb-2 has-text-weight-medium" style="display: block;">Wallet</span>
+                            <a class="icon" href="/status/withdraw/">
+                                <i class="fas fa-wallet fa-2x has-text-primary"></i>
+                            </a>
+                        </p> 
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <footer class="card-footer">
+                    <div class="card-footer-item is-flex-direction-column"> 
+                      <span>Jobs <i class="fas fa-briefcase"></i></span>
+                      <span class="has-text-weight-medium">{{jobs}}</span>
+                    </div>
+                    <div class="card-footer-item is-flex-direction-column"> 
+                      <span>Earnings<i class="fas fa-dollar-sign"></i></span>
+                      <span class="has-text-weight-medium">
+                        {% if income %}{{income|floatformat:2}}{% else %}0{% endif %}
+                      </span>
+                    </div> 
+                </footer>
+            </div>
+        </section>
+        <section class="section ">        
+            {% if active_jobs %}                
+                <h3 class="title has-text-weight-normal	">Available jobs</h3>
+                
+                {% if not has_profile %}
+                    <div  class="message is-warning has-text-grey-dark">
+                        <div class="message-body">
+                            <p>Please <a class="is-link" href="/status/edit/">update your profile</a> first</p>
+                        </div>
+                    </div>                
+                    <div class="is-flex is-flex-wrap-wrap">            
+                        {% for job in active_jobs %}                       
+                            <div class="card job ">                        
+                                <span class="icon is-medium	 has-text-danger" style="position: absolute; z-index: 1;">
+                                    <i class="fab fa-{{job.platform|lower}}" style="text-shadow: 0 0 1px white;"></i>
+                                </span> 
+                                <div class="card-image">
+                                <figure class="image">
+                                    <img src="https://res.cloudinary.com/awwzcdn/image/upload/v1617538750/{{job.file}}" alt="Placeholder image">
+                                </figure>
+                                </div>
+                            </div>                
+                        {% endfor %}
+                    </div> 
+                    {% else %}
+                        <div class="is-flex is-flex-wrap-wrap">            
+                            {% for job in active_jobs %}                       
+                                <a href="/status/job/id-{{job.uuid}}"  class="card job ">                        
+                                    <span class="icon is-medium	 has-text-danger" style="position: absolute; z-index: 1;">
+                                        <i class="fab fa-{{job.platform|lower}}" style="text-shadow: 0 0 1px white;"></i>
+                                    </span> 
+                                    <div class="card-image">
+                                    <figure class="image">
+                                        <img src="https://res.cloudinary.com/awwzcdn/image/upload/v1617538750/{{job.file}}" alt="Placeholder image">
+                                    </figure>
+                                    </div>
+                                </a>                
+                            {% endfor %}
+                        </div>                   
+                {% endif %}
+
+                {% else %}
+                    <h3 class="title has-text-weight-normal	">Available jobs will appear here</h3>                
+                    {% if not has_profile %}
+                        <div  class="message is-warning has-text-grey-dark">
+                            <div class="message-body">
+                                <p>You won't be assigned any job before <a class="is-link" href="/status/edit/">completting profile</a></p>
+                            </div>
+                        </div> 
+                    {%endif%}
+            {% endif %}
+        </section>
+    </body>
+    <script src="/static/app/js/control.js"></script>
+    <script>
+    function hideShow() {
+        var x = document.querySelector(".submit-container");
+        if (x.style.display === "none") {
+          x.style.display = "flex";
+        } else {
+          x.style.display = "none";
+        }
+      }
+    </script> 
+</html>

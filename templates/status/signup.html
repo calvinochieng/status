@@ -1,0 +1,45 @@
+
+{% extends 'status/status_base.html' %}
+
+{% block tittle %}Signup{% endblock tittle %}
+    
+{% block cta_buttons %}
+    <div class="buttons">
+        <a href="/status/login/" class="button is-black has-text-white">
+            Login
+        </a>
+    </div>
+{%endblock cta_buttons%}
+{% block content%}
+    <div class="" style="width:100%;">        
+        <h1 class="padded title  has-text-weight-normal	mb-0">
+            Join To Start
+        </h1>         
+        <form method="POST" style="margin-top: 0px !important;" action="." class="container ">{% csrf_token %}
+            <div class="field">
+                <label class="label  "  for="id_username">Username*( one word )</label>
+                <small>Example: jone or jone_doe or jone_</small>
+                <div class="control">
+                    <input placeholder="Use one word"  class="input"  type="text" name="username" maxlength="150" autocapitalize="none" autocomplete="username" autofocus required id="id_username">
+                </div>
+            </div>
+            
+            <div class="field">
+                <label class="label" for="id_password1">Password*(8 characters or more)</label>
+                <small>Example: G@in#01 or FthWYjkoQ7#</small>
+                <div class="control">
+                    <input placeholder="Must be 8 characters or more" class="input" type="password" name="password1" autocomplete="new-password" required id="id_password1">
+                </div>
+            </div>
+            
+            <div class="field">
+                <label class="label "  for="id_password2">Confirm Password</label>
+                <small>Must match password above</small>
+                <div class="control">
+                    <input placeholder="Must match above password" class="input" type="password" name="password2" autocomplete="new-password" required id="id_password2">
+                </div>
+            </div> 
+            <button type="submit" class="button is-primary" style="width:100%;"> JOIN</button>
+        </form>
+    </div>
+{%endblock content%}
